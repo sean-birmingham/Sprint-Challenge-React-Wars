@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import CharacterCard from './components/CharacterCard';
 
 import './App.css';
 
@@ -16,15 +17,20 @@ const App = () => {
       .get(`https://swapi.co/api/people/`)
       .then(response => {
         console.log(response);
+        setCharacters(response.data.results)
       })
-  }
+      .catch(error => console.log(error));
+  };
 
-  useEffect(didUpdate, [])
+  useEffect(didUpdate, []);
 
 
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
+      {characters.map(character => {
+        return <CharacterCard key={character.name} character={character} />
+      })}
     </div>
   );
 }
